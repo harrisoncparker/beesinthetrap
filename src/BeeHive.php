@@ -61,6 +61,14 @@ class BeeHive
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getBeesInHive()
+	{
+		return $this->beesInHive;
+	}
+
+	/**
 	 * Start a new game by generating a new beehive for the player to destroy.
 	 */
 	private function startNewBeeHive()
@@ -78,24 +86,11 @@ class BeeHive
 		foreach ( $this->beeQuantities as $beeType => $quantity ) {
 			$beeCount = 0;
 			while ( $beeCount < $quantity ) {
-				$this->beesInHive[] = new $beeType($beeID);
+				$this->beesInHive[$beeID] = new $beeType($beeID);
 				$beeCount++;
 				$beeID++;
 			}
 		}
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getBeeInformation()
-	{
-		return array_map( function ($bee) {
-			return [
-				'type' => $bee->getType(),
-				'hitPoints' => $bee->getHitPoints(),
-			];
-		}, $this->beesInHive );
 	}
 
 	public function displayBeehiveInformation()
@@ -108,8 +103,8 @@ class BeeHive
 				'Drone Bee' => 0,
 			];
 
-			foreach ($this->getBeeInformation() as $bee) {
-				switch($bee['type']){
+			foreach ($this->getBeesInHive() as $bee) {
+				switch($bee->getType()){
 					case 'Queen Bee':
 						$beeGroups['Queen Bee']++;
 						break;
@@ -134,5 +129,12 @@ class BeeHive
 			echo "This hive has been destroyed\n";
 			echo "Attack a new hive? (y/n)\n";
 		}
+	}
+
+	/**
+	 * @param $beeID
+	 */
+	public function hitBee($beeID) {
+		$this->beesInHive[$beeID]->damage();
 	}
 }

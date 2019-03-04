@@ -12,6 +12,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 
+use Game\BeeHive;
 use Game\Bees\QueenBee;
 use Game\Bees\WorkerBee;
 use Game\Bees\DroneBee;
@@ -19,7 +20,7 @@ use Game\Bees\DroneBee;
 class BeesTest extends TestCase
 {
 	/** @test */
-	public function TestBeesTakeTheCorrectAmountOfDamageDamage()
+	public function BeesTakeTheCorrectAmountOfDamageDamage()
 	{
 		$queenBee = new QueenBee(1);
 		$workerBee = new WorkerBee(2);
@@ -39,7 +40,7 @@ class BeesTest extends TestCase
 	}
 
 	/** @test */
-	public function TestBeesTakePersistentDamage()
+	public function BeesTakePersistentDamage()
 	{
 		$queenBee = new QueenBee(1);
 
@@ -48,5 +49,22 @@ class BeesTest extends TestCase
 		$this->assertEquals(92, $queenBee->getHitPoints());
 		$queenBee->damage();
 		$this->assertEquals(84, $queenBee->getHitPoints());
+	}
+
+	/** @test */
+	public function CanTargetABeeInHiveByID(){
+		$hive = new BeeHive();
+
+		$hive->hitBee(3);
+
+		$this->assertEquals('Worker Bee', $hive->getBeesInHive()[3]->getType(),
+			'This test is expecting bee 3 to be a Worker Bee.'
+		);
+		$this->assertEquals('Worker Bee', $hive->getBeesInHive()[4]->getType(),
+			'This test is expecting bee 4 to be a Worker Bee.'
+		);
+
+		$this->assertEquals(65, $hive->getBeesInHive()[3]->getHitPoints());
+		$this->assertEquals(75, $hive->getBeesInHive()[4]->getHitPoints());
 	}
 }
