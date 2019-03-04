@@ -19,8 +19,6 @@ class BeeHiveTest extends TestCase
 {
 	/** @var */
 	private $beehive;
-	/** @var string */
-	private $gameStartText = "Starting new game: Bees In The Trap\n\n";
 
 	/**
 	 * Create a new beehive before every test in this file
@@ -31,13 +29,7 @@ class BeeHiveTest extends TestCase
 	}
 
 	/** @test */
-	public function PlayerIsNotifiedWhenNewBeehiveIsCreated()
-	{
-		$this->expectOutputString( $this->gameStartText );
-	}
-
-	/** @test */
-	public function CanCreateABeehiveFullOfBees()
+	public function can_create_a_bee_hive_full_of_bees()
 	{
 		self::assertEquals( [
 			// 1 Queen Bee
@@ -61,25 +53,13 @@ class BeeHiveTest extends TestCase
 	}
 
 	/** @test */
-	public function CanPrintHiveInformationToConsole()
-	{
-		$this->beehive->displayBeehiveInformation();
-		$this->expectOutputString(
-			$this->gameStartText .
-			"The hive is still intact and the Queen Bee is alive.\n" .
-			"There are 5 Worker Bees alive and 0 dead\n" .
-			"There are 8 Drone Bees alive and 0 dead\n"
-		);
-	}
-
-	/** @test */
-	public function CanCheckIfHiveIsIntact()
+	public function can_check_if_hive_is_intact()
 	{
 		$this->assertTrue( $this->beehive->hiveIntact() );
 	}
 
 	/** @test */
-	public function CanGetInformationOfASpecificBeeInHive()
+	public function can_get_information_of_a_specific_bee()
 	{
 		$this->assertEquals( new QueenBee( 1 ), $this->beehive->getBeesInHive()[1] );
 		$this->assertEquals( new WorkerBee( 4 ), $this->beehive->getBeesInHive()[4] );

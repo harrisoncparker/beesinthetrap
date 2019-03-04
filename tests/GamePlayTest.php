@@ -65,7 +65,7 @@ class GamePlayTest extends TestCase
 	 */
 
 	/** @test */
-	public function CanStartANewGameAndExitIt()
+	public function can_start_a_new_game_and_exit_it()
 	{
 		$newGameCommandTester = $this->setUpCommandTester( 'new-game' );
 

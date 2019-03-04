@@ -19,7 +19,7 @@ use Game\Bees\DroneBee;
 class BeesTest extends TestCase
 {
 	/** @test */
-	public function BeesTakeTheCorrectAmountOfDamageDamage()
+	public function bees_take_the_correct_amount_of_damage()
 	{
 		$queenBee  = new QueenBee( 1 );
 		$workerBee = new WorkerBee( 2 );
@@ -39,7 +39,7 @@ class BeesTest extends TestCase
 	}
 
 	/** @test */
-	public function BeesTakePersistentDamage()
+	public function bees_take_persistent_damage()
 	{
 		$queenBee = new QueenBee( 1 );
 
@@ -51,7 +51,7 @@ class BeesTest extends TestCase
 	}
 
 	/** @test */
-	public function CanTargetABeeInHiveByID()
+	public function can_target_a_bee_in_hive_by_id()
 	{
 		$hive = new BeeHive();
 
