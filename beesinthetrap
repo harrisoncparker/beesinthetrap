@@ -1,4 +1,4 @@
 #!/bin/bash
-# My first script
+# Run the Bees In The Trap Game
 
-php ./game.php
+./game.php $1

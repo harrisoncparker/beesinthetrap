@@ -1,24 +1,27 @@
 {
-    "name": "harrisoncparker/beesinthetrap",
-    "description": "A text based game written in PHP and based on the waxim/beegame technical test",
-    "type": "project",
-    "authors": [
-        {
-            "name": "Harrison C Parker",
-            "email": "hcp111@me.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Game\\": "src/",
-						"Tests\\": "tests/"
-        }
-    },
-    "require": {
-				"php" : "^7.2",
-        "symfony/console": "^4.2"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7"
-    }
+	"name": "harrisoncparker/beesinthetrap",
+	"description": "A text based game written in PHP and based on the waxim/beegame technical test",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Harrison C Parker",
+			"email": "hcp111@me.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Game\\": "src/",
+			"Tests\\": "tests/"
+		}
+	},
+	"classmap": [
+		"src"
+	],
+	"require": {
+		"php": "^7.2",
+		"symfony/console": "^4.2"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^7"
+	}
 }
