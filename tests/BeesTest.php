@@ -11,10 +11,10 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use Game\BeeHive;
-use Game\Bees\QueenBee;
-use Game\Bees\WorkerBee;
-use Game\Bees\DroneBee;
+use Game\GameObjects\BeeHive;
+use Game\GameObjects\Bees\QueenBee;
+use Game\GameObjects\Bees\WorkerBee;
+use Game\GameObjects\Bees\DroneBee;
 
 class BeesTest extends TestCase
 {

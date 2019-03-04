@@ -6,7 +6,7 @@
  * Time: 11:45
  */
 
-namespace Game\Bees;
+namespace Game\GameObjects\Bees;
 
 
 abstract class AbstractBee

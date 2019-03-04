@@ -6,7 +6,7 @@
  * Time: 13:31
  */
 
-namespace Game\Bees;
+namespace Game\GameObjects\Bees;
 
 
 class DroneBee extends AbstractBee

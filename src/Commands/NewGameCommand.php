@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Game\BeeHive;
+use Game\GameObjects\BeeHive;
 
 class NewGameCommand extends Command
 {
@@ -30,7 +30,7 @@ class NewGameCommand extends Command
 	/** @var Question */
 	private $commandNamePrompt;
 
-	/** @var BeeHive */
+	/** @var \Game\GameObjects\BeeHive */
 	private $beehive;
 
 	/** @var bool  */

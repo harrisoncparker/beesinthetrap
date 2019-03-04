@@ -6,11 +6,11 @@
  * Time: 12:51
  */
 
-namespace Game;
+namespace Game\GameObjects;
 
-use Game\Bees\QueenBee;
-use Game\Bees\WorkerBee;
-use Game\Bees\DroneBee;
+use Game\GameObjects\Bees\QueenBee;
+use Game\GameObjects\Bees\WorkerBee;
+use Game\GameObjects\Bees\DroneBee;
 
 class BeeHive
 {
