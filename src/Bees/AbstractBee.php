@@ -11,11 +11,22 @@ namespace Game\Bees;
 
 abstract class AbstractBee
 {
-	private $type;
-	private $HitPoints;
+	private $id;
 
-	public static function showInformation()
+	protected $type;
+	protected $HitPoints;
+	protected $damageTaken;
+
+	public function __construct($id)
 	{
-		echo "This is some bee information \n";
+		$this->id = $id;
+	}
+
+	public function getType() {
+		return $this->type;
+	}
+
+	public function getHitPoints() {
+		return $this->HitPoints;
 	}
 }
