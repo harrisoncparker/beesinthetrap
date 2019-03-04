@@ -14,7 +14,7 @@ abstract class AbstractBee
 	private $id;
 
 	protected $type;
-	protected $HitPoints;
+	protected $hitPoints;
 	protected $damageTaken;
 
 	public function __construct($id)
@@ -27,6 +27,10 @@ abstract class AbstractBee
 	}
 
 	public function getHitPoints() {
-		return $this->HitPoints;
+		return $this->hitPoints;
+	}
+
+	public function damage() {
+		$this->hitPoints = $this->hitPoints - $this->damageTaken;
 	}
 }

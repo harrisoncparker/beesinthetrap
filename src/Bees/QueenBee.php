@@ -12,6 +12,6 @@ namespace Game\Bees;
 class QueenBee extends AbstractBee
 {
 	protected $type = 'Queen Bee';
-	protected $HitPoints = 100;
+	protected $hitPoints = 100;
 	protected $damageTaken = 8;
 }
