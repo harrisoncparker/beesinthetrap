@@ -29,6 +29,12 @@ class BeeHive
 	 * @var array
 	 */
 	private $beesInHive = [];
+	/** @var array  */
+	private $deadBees = [
+		'Queen Bee' => 0,
+		'Worker Bee' => 0,
+		'Drone Bee' => 0
+	];
 
 	/**
 	 * BeeHive constructor.
@@ -38,12 +44,28 @@ class BeeHive
 		$this->startNewBeeHive();
 	}
 
+	public function hiveIntact()
+	{
+		return $this->hiveContains('Queen Bee') && count($this->beesInHive);
+	}
+
+	private function hiveContains($beeType)
+	{
+		$count = 0;
+		foreach ($this->beesInHive as $bee) {
+			if($bee->getType() === $beeType) {
+				$count++;
+			}
+		}
+		return $count;
+	}
+
 	/**
 	 * Start a new game by generating a new beehive for the player to destroy.
 	 */
 	private function startNewBeeHive()
 	{
-		print "Starting new game: Bees In The Trap\n";
+		print "Starting new game: Bees In The Trap\n\n";
 		$this->addBeesToHive();
 	}
 
@@ -74,5 +96,43 @@ class BeeHive
 				'hitPoints' => $bee->getHitPoints(),
 			];
 		}, $this->beesInHive );
+	}
+
+	public function displayBeehiveInformation()
+	{
+		if($this->hiveIntact()) {
+			echo "The hive is still intact and the Queen Bee is alive.\n";
+			$beeGroups = [
+				'Queen Bee' => 0,
+				'Worker Bee' => 0,
+				'Drone Bee' => 0,
+			];
+
+			foreach ($this->getBeeInformation() as $bee) {
+				switch($bee['type']){
+					case 'Queen Bee':
+						$beeGroups['Queen Bee']++;
+						break;
+					case 'Worker Bee':
+						$beeGroups['Worker Bee']++;
+						break;
+					case 'Drone Bee':
+						$beeGroups['Drone Bee']++;
+						break;
+				}
+			}
+
+			foreach ($beeGroups as $beeGroupName => $quantity) {
+				if($beeGroupName != 'Queen Bee') {
+					echo "There are $quantity {$beeGroupName}s alive and "
+						 . $this->deadBees[$beeGroupName] . " dead\n";
+				}
+			}
+
+
+		} else {
+			echo "This hive has been destroyed\n";
+			echo "Attack a new hive? (y/n)\n";
+		}
 	}
 }
