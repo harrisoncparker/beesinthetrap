@@ -98,38 +98,48 @@ class BeeHive
 	{
 		if ( $this->hiveIntact() ) {
 			echo "The hive is still intact and the Queen Bee is alive.\n";
-			$beeGroups = [
-				'Queen Bee'  => 0,
-				'Worker Bee' => 0,
-				'Drone Bee'  => 0,
-			];
 
-			foreach ( $this->getBeesInHive() as $bee ) {
-				switch ( $bee->getType() ) {
-					case 'Queen Bee':
-						$beeGroups['Queen Bee'] ++;
-						break;
-					case 'Worker Bee':
-						$beeGroups['Worker Bee'] ++;
-						break;
-					case 'Drone Bee':
-						$beeGroups['Drone Bee'] ++;
-						break;
-				}
-			}
+			$beeGroups = $this->getBeeGroups();
 
-			foreach ( $beeGroups as $beeGroupName => $quantity ) {
+			foreach ( $beeGroups as $beeGroupName => $beeGroup ) {
 				if ( $beeGroupName != 'Queen Bee' ) {
-					echo "There are $quantity {$beeGroupName}s alive and "
+					echo "There are {$beeGroup['quantity']} {$beeGroupName}s alive and "
 						 . $this->deadBees[ $beeGroupName ] . " dead\n";
 				}
 			}
-
 
 		} else {
 			echo "This hive has been destroyed\n";
 			echo "Attack a new hive? (y/n)\n";
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getBeeGroups()
+	{
+		$beeGroups = [
+			'Queen Bee'  => [ 'quantity' => 0, 'bees' => [] ],
+			'Worker Bee' => [ 'quantity' => 0, 'bees' => [] ],
+			'Drone Bee'  => [ 'quantity' => 0, 'bees' => [] ],
+		];
+
+		foreach ( $this->getBeesInHive() as $bee ) {
+			switch ( $bee->getType() ) {
+				case 'Queen Bee':
+					$beeGroups['Queen Bee']['quantity'] ++;
+					break;
+				case 'Worker Bee':
+					$beeGroups['Worker Bee']['quantity'] ++;
+					break;
+				case 'Drone Bee':
+					$beeGroups['Drone Bee']['quantity'] ++;
+					break;
+			}
+		}
+
+		return $beeGroups;
 	}
 
 	/**
