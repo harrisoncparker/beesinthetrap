@@ -29,11 +29,11 @@ class BeeHive
 	 * @var array
 	 */
 	private $beesInHive = [];
-	/** @var array  */
+	/** @var array */
 	private $deadBees = [
-		'Queen Bee' => 0,
+		'Queen Bee'  => 0,
 		'Worker Bee' => 0,
-		'Drone Bee' => 0
+		'Drone Bee'  => 0
 	];
 
 	/**
@@ -46,17 +46,18 @@ class BeeHive
 
 	public function hiveIntact()
 	{
-		return $this->hiveContains('Queen Bee') && count($this->beesInHive);
+		return $this->hiveContains( 'Queen Bee' ) && count( $this->beesInHive );
 	}
 
-	private function hiveContains($beeType)
+	private function hiveContains( $beeType )
 	{
 		$count = 0;
-		foreach ($this->beesInHive as $bee) {
-			if($bee->getType() === $beeType) {
-				$count++;
+		foreach ( $this->beesInHive as $bee ) {
+			if ( $bee->getType() === $beeType ) {
+				$count ++;
 			}
 		}
+
 		return $count;
 	}
 
@@ -86,41 +87,41 @@ class BeeHive
 		foreach ( $this->beeQuantities as $beeType => $quantity ) {
 			$beeCount = 0;
 			while ( $beeCount < $quantity ) {
-				$this->beesInHive[$beeID] = new $beeType($beeID);
-				$beeCount++;
-				$beeID++;
+				$this->beesInHive[ $beeID ] = new $beeType( $beeID );
+				$beeCount ++;
+				$beeID ++;
 			}
 		}
 	}
 
 	public function displayBeehiveInformation()
 	{
-		if($this->hiveIntact()) {
+		if ( $this->hiveIntact() ) {
 			echo "The hive is still intact and the Queen Bee is alive.\n";
 			$beeGroups = [
-				'Queen Bee' => 0,
+				'Queen Bee'  => 0,
 				'Worker Bee' => 0,
-				'Drone Bee' => 0,
+				'Drone Bee'  => 0,
 			];
 
-			foreach ($this->getBeesInHive() as $bee) {
-				switch($bee->getType()){
+			foreach ( $this->getBeesInHive() as $bee ) {
+				switch ( $bee->getType() ) {
 					case 'Queen Bee':
-						$beeGroups['Queen Bee']++;
+						$beeGroups['Queen Bee'] ++;
 						break;
 					case 'Worker Bee':
-						$beeGroups['Worker Bee']++;
+						$beeGroups['Worker Bee'] ++;
 						break;
 					case 'Drone Bee':
-						$beeGroups['Drone Bee']++;
+						$beeGroups['Drone Bee'] ++;
 						break;
 				}
 			}
 
-			foreach ($beeGroups as $beeGroupName => $quantity) {
-				if($beeGroupName != 'Queen Bee') {
+			foreach ( $beeGroups as $beeGroupName => $quantity ) {
+				if ( $beeGroupName != 'Queen Bee' ) {
 					echo "There are $quantity {$beeGroupName}s alive and "
-						 . $this->deadBees[$beeGroupName] . " dead\n";
+						 . $this->deadBees[ $beeGroupName ] . " dead\n";
 				}
 			}
 
@@ -134,7 +135,8 @@ class BeeHive
 	/**
 	 * @param $beeID
 	 */
-	public function hitBee($beeID) {
-		$this->beesInHive[$beeID]->damage();
+	public function hitBee( $beeID )
+	{
+		$this->beesInHive[ $beeID ]->damage();
 	}
 }
