@@ -33,6 +33,9 @@ class NewGameCommand extends Command
 	/** @var BeeHive */
 	private $beehive;
 
+	/** @var bool  */
+	private $runGame = true;
+
 	/**
 	 * Configure the new game command
 	 */
@@ -64,7 +67,7 @@ class NewGameCommand extends Command
 		$this->questionHelper    = $this->getHelper( 'question' );
 		$this->commandNamePrompt = new Question( 'Type a command: ', 25 );
 
-		while ( $this->beehive->hiveIntact() ) {
+		while ( $this->beehive->hiveIntact() &&  $this->runGame) {
 			$this->askForGameCommand();
 		}
 	}
@@ -90,7 +93,11 @@ class NewGameCommand extends Command
 
 		if ( $this->getApplication()->has( $commandName ) ) {
 
-			$this->runCommand($commandName);
+			$returnCode = $this->runCommand($commandName);
+
+			if($returnCode == 'exit-game') {
+				$this->runGame = false;
+			}
 
 			$this->output->writeln( [ '' ] );
 
@@ -99,11 +106,7 @@ class NewGameCommand extends Command
 			 * @note I created the ExitCommand class instead as I
 			 * wanted the user to see this in the `list` of commands
 			 */
-			// $commandName == 'exit' ? exit : false;
-
-			if ( $commandName == '^C' ) {
-				$this->runCommand('exit');
-			}
+			// $this->runGame = $commandName == 'exit' ? false : true;
 
 			$this->notACommand();
 		};
@@ -114,9 +117,11 @@ class NewGameCommand extends Command
 	 * @param array $input
 	 *
 	 * @throws \Exception
+	 *
+	 * @return mixed
 	 */
 	private function runCommand($commandName, $input = []) {
-		$this->getApplication()
+		return $this->getApplication()
 			 ->find( $commandName )
 			 ->run(
 				 new ArrayInput( $input ),

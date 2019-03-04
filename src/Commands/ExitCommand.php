@@ -31,7 +31,7 @@ class ExitCommand extends Command
 	 * @param InputInterface $input
 	 * @param OutputInterface $output
 	 *
-	 * @return int|null|void
+	 * @return string
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output )
 	{
@@ -40,6 +40,6 @@ class ExitCommand extends Command
 			'Goodbye.'
 		]);
 
-		exit;
+		return 'exit-game';
 	}
 }
