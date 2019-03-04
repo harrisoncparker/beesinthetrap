@@ -3,7 +3,7 @@ A game created by Harrison C Parker based on the
 waxim/[beegame](https://github.com/waxim/beegame/blob/master/BeeGame.md) 
 technical test.
 
-### Starting a new game
+### Starting the game
 1. run `composer install` in the root directory.
 2. run `./beesinthetrap new-game`.
 
