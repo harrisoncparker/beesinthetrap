@@ -29,6 +29,7 @@ class BeeHive
 	 * @var array
 	 */
 	private $beesInHive = [];
+
 	/** @var array */
 	private $deadBees = [
 		'Queen Bee'  => 0,
@@ -44,11 +45,19 @@ class BeeHive
 		$this->startNewBeeHive();
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function hiveIntact()
 	{
 		return $this->hiveContains( 'Queen Bee' ) && count( $this->beesInHive );
 	}
 
+	/**
+	 * @param $beeType
+	 *
+	 * @return int
+	 */
 	private function hiveContains( $beeType )
 	{
 		$count = 0;
@@ -74,7 +83,6 @@ class BeeHive
 	 */
 	private function startNewBeeHive()
 	{
-		print "Starting new game: Bees In The Trap\n\n";
 		$this->addBeesToHive();
 	}
 
@@ -91,26 +99,6 @@ class BeeHive
 				$beeCount ++;
 				$beeID ++;
 			}
-		}
-	}
-
-	public function displayBeehiveInformation()
-	{
-		if ( $this->hiveIntact() ) {
-			echo "The hive is still intact and the Queen Bee is alive.\n";
-
-			$beeGroups = $this->getBeeGroups();
-
-			foreach ( $beeGroups as $beeGroupName => $beeGroup ) {
-				if ( $beeGroupName != 'Queen Bee' ) {
-					echo "There are {$beeGroup['quantity']} {$beeGroupName}s alive and "
-						 . $this->deadBees[ $beeGroupName ] . " dead\n";
-				}
-			}
-
-		} else {
-			echo "This hive has been destroyed\n";
-			echo "Attack a new hive? (y/n)\n";
 		}
 	}
 
