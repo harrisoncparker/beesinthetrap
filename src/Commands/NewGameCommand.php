@@ -39,6 +39,7 @@ class NewGameCommand extends Command
 	private $allowedGameCommands = [
 		'hit',
 		'hitagain',
+		'hivestatus',
 		'exit'
 	];
 
@@ -128,8 +129,7 @@ class NewGameCommand extends Command
 
 		$this->output->writeln( [
 			'Direct Hit!',
-			"You took {$result['damage']} hit points from a {$result['type']}",
-			'id -> ' . $this->lastBeeHit
+			"You took {$result['damage']} hit points from a {$result['type']}"
 		] );
 
 		if ( $result['isDead'] ) {
@@ -138,6 +138,26 @@ class NewGameCommand extends Command
 			$this->output->writeln( [ 'This Bee looks like it\'s dying.' ] );
 		} else if ( $result['looksWeak'] ) {
 			$this->output->writeln( [ 'This Bee is getting weak.' ] );
+		}
+	}
+
+	private function hivestatus()
+	{
+		$beesLeft  = count( $this->beehive->getBeesInHive() );
+		$beeGroups = $this->beehive->getBeeGroups();
+
+		if ( $beesLeft === 1 ) {
+			$beeCountText = "There is $beesLeft bee in the beehive!";
+		} else {
+			$beeCountText = "There are $beesLeft bees in the beehive.";
+		}
+
+		$this->output->writeln( [ $beeCountText ] );
+
+		foreach ( $beeGroups as $beeType => $group ) {
+			$this->output->writeln( [
+				"{$beeType}s: {$group['quantity']}"
+			] );
 		}
 	}
 
