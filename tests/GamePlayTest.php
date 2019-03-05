@@ -51,7 +51,8 @@ class GamePlayTest extends TestCase
 	 * @var array
 	 */
 	private $expectedOutputs = [
-		'newGame'  => "You've started a new game! A fresh new beehive has bee created for you to destroy.\n" .
+		'newGame'  => "\n" .
+					  "You've started a new game! A fresh new beehive has bee created for you to destroy.\n" .
 					  "===================================================================================\n" .
 					  "\n" .
 					  "Type a command: ",
@@ -69,8 +70,7 @@ class GamePlayTest extends TestCase
 	{
 		$newGameCommandTester = $this->setUpCommandTester( 'new-game' );
 
-		$newGameCommandTester->setInputs( [ 'exit' ] )
-							 ->execute( [] );
+		$newGameCommandTester->setInputs( [ 'exit' ] )->execute( [] );
 
 		$this->assertEquals(
 			$this->expectedOutputs['newGame'] . $this->expectedOutputs['exitGame'],

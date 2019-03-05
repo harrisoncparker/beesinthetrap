@@ -33,7 +33,7 @@ class NewGameCommand extends Command
 	/** @var \Game\GameObjects\BeeHive */
 	private $beehive;
 
-	/** @var bool  */
+	/** @var bool */
 	private $runGame = true;
 
 	/**
@@ -59,6 +59,7 @@ class NewGameCommand extends Command
 		$this->output = $output;
 
 		$this->output->writeln( [
+			'',
 			'<info>You\'ve started a new game! A fresh new beehive has bee created for you to destroy.</info>',
 			'<info>===================================================================================</info>',
 			''
@@ -67,7 +68,7 @@ class NewGameCommand extends Command
 		$this->questionHelper    = $this->getHelper( 'question' );
 		$this->commandNamePrompt = new Question( 'Type a command: ', 25 );
 
-		while ( $this->beehive->hiveIntact() &&  $this->runGame) {
+		while ( $this->beehive->hiveIntact() && $this->runGame ) {
 			$this->askForGameCommand();
 		}
 	}
@@ -91,41 +92,33 @@ class NewGameCommand extends Command
 	{
 		$commandName = $this->questionHelper->ask( $this->input, $this->output, $this->commandNamePrompt );
 
-		if ( $this->getApplication()->has( $commandName ) ) {
-
-			$returnCode = $this->runCommand($commandName);
-
-			if($returnCode == 'exit-game') {
-				$this->runGame = false;
-			}
-
+		if ( method_exists( $this, $commandName ) ) {
+			$this->$commandName();
 			$this->output->writeln( [ '' ] );
-
 		} else {
-			/**
-			 * @note I created the ExitCommand class instead as I
-			 * wanted the user to see this in the `list` of commands
-			 */
-			// $this->runGame = $commandName == 'exit' ? false : true;
-
 			$this->notACommand();
-		};
+		}
 	}
 
 	/**
-	 * @param $commandName
-	 * @param array $input
-	 *
-	 * @throws \Exception
-	 *
-	 * @return mixed
+	 * Game Commands
 	 */
-	private function runCommand($commandName, $input = []) {
-		return $this->getApplication()
-			 ->find( $commandName )
-			 ->run(
-				 new ArrayInput( $input ),
-				 $this->output
-			 );
+
+	private function hit()
+	{
+		$result = $this->beehive->hitBee();
+
+		$this->output->writeln( [
+			'You Hit a bee'
+		] );
+	}
+
+	private function exit()
+	{
+		$this->output->writeln( [
+			'You\'ve given up on killing bees.',
+			'Goodbye.'
+		] );
+		$this->runGame = false;
 	}
 }

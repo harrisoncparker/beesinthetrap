@@ -30,12 +30,7 @@ class BeeHive
 	 */
 	private $beesInHive = [];
 
-	/** @var array */
-	private $deadBees = [
-		'Queen Bee'  => 0,
-		'Worker Bee' => 0,
-		'Drone Bee'  => 0
-	];
+	private $hitsTaken = 0;
 
 	/**
 	 * BeeHive constructor.
@@ -131,10 +126,16 @@ class BeeHive
 	}
 
 	/**
-	 * @param $beeID
+	 * @param int $beeID
+	 *
+	 * @return mixed
 	 */
-	public function hitBee( $beeID )
+	public function hitBee( $beeID = 0 )
 	{
-		$this->beesInHive[ $beeID ]->damage();
+		if($beeID === 0) {
+			return array_rand($this->beesInHive, 1);
+		}
+
+		return $this->beesInHive[ $beeID ]->damage();
 	}
 }
