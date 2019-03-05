@@ -12,8 +12,6 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Game\Commands\ExitCommand;
-use Game\Commands\HitCommand;
 use Game\Commands\NewGameCommand;
 
 class GamePlayTest extends TestCase
@@ -27,8 +25,6 @@ class GamePlayTest extends TestCase
 		$this->app = new Application();
 
 		$this->app->add( new NewGameCommand() );
-		$this->app->add( new HitCommand() );
-		$this->app->add( new ExitCommand() );
 	}
 
 	/**
