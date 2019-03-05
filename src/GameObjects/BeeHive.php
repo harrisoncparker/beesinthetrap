@@ -130,12 +130,20 @@ class BeeHive
 	 *
 	 * @return mixed
 	 */
-	public function hitBee( $beeID = 0 )
+	public function hitBee( $beeID = - 1 )
 	{
-		if($beeID === 0) {
-			return array_rand($this->beesInHive, 1);
+		$this->hitsTaken ++;
+
+		if ( array_key_exists( $beeID, $this->beesInHive ) ) {
+			$result = $this->beesInHive[ $beeID ]->damage();
+		} else {
+			$result = $this->beesInHive[ array_rand( $this->beesInHive, 1 ) ]->damage();
 		}
 
-		return $this->beesInHive[ $beeID ]->damage();
+		if ( $result['isDead'] ) {
+			unset( $this->beesInHive[ $result['id'] ] );
+		}
+
+		return $result;
 	}
 }

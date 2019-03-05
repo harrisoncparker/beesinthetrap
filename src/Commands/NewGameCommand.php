@@ -9,7 +9,6 @@
 namespace Game\Commands;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -35,6 +34,15 @@ class NewGameCommand extends Command
 
 	/** @var bool */
 	private $runGame = true;
+
+	/** @var array */
+	private $allowedGameCommands = [
+		'hit',
+		'hitagain',
+		'exit'
+	];
+
+	private $lastBeeHit = - 1;
 
 	/**
 	 * Configure the new game command
@@ -92,7 +100,7 @@ class NewGameCommand extends Command
 	{
 		$commandName = $this->questionHelper->ask( $this->input, $this->output, $this->commandNamePrompt );
 
-		if ( method_exists( $this, $commandName ) ) {
+		if ( method_exists( $this, $commandName ) && in_array( $commandName, $this->allowedGameCommands ) ) {
 			$this->$commandName();
 			$this->output->writeln( [ '' ] );
 		} else {
@@ -106,11 +114,31 @@ class NewGameCommand extends Command
 
 	private function hit()
 	{
-		$result = $this->beehive->hitBee();
+		$this->handleHitResult( $this->beehive->hitBee() );
+	}
+
+	private function hitagain()
+	{
+		$this->handleHitResult( $this->lastBeeHit ? $this->beehive->hitBee( $this->lastBeeHit ) : 0 );
+	}
+
+	private function handleHitResult( $result )
+	{
+		$this->lastBeeHit = $result['id'];
 
 		$this->output->writeln( [
-			'You Hit a bee'
+			'Direct Hit!',
+			"You took {$result['damage']} hit points from a {$result['type']}",
+			'id -> ' . $this->lastBeeHit
 		] );
+
+		if ( $result['isDead'] ) {
+			$this->output->writeln( [ 'You\'ve killed this Bee!' ] );
+		} else if ( $result['looksDying'] ) {
+			$this->output->writeln( [ 'This Bee looks like it\'s dying.' ] );
+		} else if ( $result['looksWeak'] ) {
+			$this->output->writeln( [ 'This Bee is getting weak.' ] );
+		}
 	}
 
 	private function exit()

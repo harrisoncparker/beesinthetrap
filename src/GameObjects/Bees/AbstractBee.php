@@ -14,12 +14,14 @@ abstract class AbstractBee
 	private $id;
 
 	protected $type;
+	protected $maxHitPoints;
 	protected $hitPoints;
 	protected $damageTaken;
 
 	public function __construct( $id )
 	{
 		$this->id = $id;
+		$this->maxHitPoints = $this->hitPoints;
 	}
 
 	public function getType()
@@ -35,5 +37,14 @@ abstract class AbstractBee
 	public function damage()
 	{
 		$this->hitPoints = $this->hitPoints - $this->damageTaken;
+
+		return [
+			'id' => $this->id,
+			'type' => $this->type,
+			'damage' => $this->damageTaken,
+			'looksWeak' => ($this->hitPoints * 2) < $this->maxHitPoints,
+			'looksDying' => ($this->hitPoints * 2) < ($this->maxHitPoints / 2),
+			'isDead' => $this->hitPoints <= 0
+		];
 	}
 }
