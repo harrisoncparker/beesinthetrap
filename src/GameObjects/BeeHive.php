@@ -34,9 +34,17 @@ class BeeHive
 
 	/**
 	 * BeeHive constructor.
+	 *
+	 * @param bool $testMode
 	 */
-	public function __construct()
+	public function __construct($testMode = false)
 	{
+		if($testMode) {
+			$this->beeQuantities = [
+				QueenBee::class  => 1
+			];
+		}
+
 		$this->startNewBeeHive();
 	}
 
@@ -71,6 +79,14 @@ class BeeHive
 	public function getBeesInHive()
 	{
 		return $this->beesInHive;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getHitsTaken()
+	{
+		return $this->hitsTaken;
 	}
 
 	/**

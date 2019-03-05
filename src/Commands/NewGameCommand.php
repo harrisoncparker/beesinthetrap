@@ -9,6 +9,7 @@
 namespace Game\Commands;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -43,6 +44,7 @@ class NewGameCommand extends Command
 		'exit'
 	];
 
+	/** @var int */
 	private $lastBeeHit = - 1;
 
 	/**
@@ -51,6 +53,7 @@ class NewGameCommand extends Command
 	protected function configure()
 	{
 		$this->setDescription( "Creates a new beehive for the player to destroy." );
+		$this->addArgument( 'test', InputArgument::OPTIONAL, 'Run in test mode' );
 	}
 
 	/**
@@ -62,10 +65,10 @@ class NewGameCommand extends Command
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output )
 	{
-		$this->beehive = new BeeHive();
-
 		$this->input  = $input;
 		$this->output = $output;
+
+		$this->beehive = new BeeHive( $this->input->getArgument( 'test' ) );
 
 		$this->output->writeln( [
 			'',
@@ -79,6 +82,10 @@ class NewGameCommand extends Command
 
 		while ( $this->beehive->hiveIntact() && $this->runGame ) {
 			$this->askForGameCommand();
+		}
+
+		if ( ! $this->beehive->hiveIntact() ) {
+			$this->winGame();
 		}
 	}
 
@@ -107,6 +114,18 @@ class NewGameCommand extends Command
 		} else {
 			$this->notACommand();
 		}
+	}
+
+	/**
+	 * Win Game message and functionality
+	 */
+	private function winGame()
+	{
+		$this->output->writeln( [
+			"<info>Congratulations, you've destroyed the beehive!</info>",
+			"<info>It took you {$this->beehive->getHitsTaken()} hits.</info>",
+			''
+		] );
 	}
 
 	/**

@@ -9,8 +9,6 @@ technical test.
 
 ### Commands
 - `hit` - Hits a random bee.
-  - `hit {number}` - Hits the bee with that number associated.
-  - `hit {bee type}` - Hits a bee of that bee type.
-    - Bee types: `DroneBee`, `WorkerBee`, `QueenBee`.
-- `examine` - Gives a summary of the beehive.
+- `hitagain` - Hit the last bee you hit.
+- `hivestatus` - Gives a summary of the beehive.
 - `exit` - Exits the game.

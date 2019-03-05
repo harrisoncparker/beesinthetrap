@@ -73,4 +73,37 @@ class GamePlayTest extends TestCase
 			$newGameCommandTester->getDisplay()
 		);
 	}
+
+	/** @test */
+	public function can_win_game()
+	{
+		$newGameCommandTester = $this->setUpCommandTester( 'new-game' );
+
+		$newGameCommandTester->setInputs(
+			array_fill( 0, 13, 'hit' )
+		)->execute( [ 'test' => 'true' ] );
+
+		// Check that the game starts
+		$this->assertContains(
+			$this->expectedOutputs['newGame'],
+			$newGameCommandTester->getDisplay()
+		);
+
+		// Check that the queen bee is hit 13 times
+		$this->assertEquals(
+			13,
+			substr_count( $newGameCommandTester->getDisplay(),
+				"Type a command: Direct Hit!\n" .
+				"You took 8 hit points from a Queen Bee\n"
+			)
+		);
+
+		// Check that the game is won
+		$this->assertContains(
+			"Congratulations, you've destroyed the beehive!\n" .
+			"It took you 13 hits.\n" .
+			"\n",
+			$newGameCommandTester->getDisplay()
+		);
+	}
 }
